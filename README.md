@@ -1,3 +1,15 @@
 ##casm-draw
 
-C and Assembly practice
+Drawing colorful lines in pure C and Assembly
+
+###Build
+
+```
+make
+```
+
+###Run
+
+```
+./main
+```
