@@ -37,6 +37,17 @@ void create_header(HEADER h, FILE *tga)
     fputc(h.desc, tga);
 }
 
+void draw_rect(int r, int g, int b, int x, int y, FILE *tga)
+{
+    for(x = 0; x < 640; x++)
+      for(y = 0; y < 480; y++)
+      {
+        fputc(b%256, tga); //B
+        fputc(g%256, tga); //G
+        fputc(r%256, tga); //R
+      }
+}
+
 
 int main ()
 {
@@ -59,17 +70,9 @@ int main ()
     tga = fopen("picture.tga", "w+");
 
     create_header(header, tga);
-
-    for(int y = 0; y < 480; y++)
-      for(int x = 0; x < 640; x++)
-      {
-        fputc((4*y)%256, tga);
-        fputc(255 - (x*2 + y*2)%256, tga);
-        fputc((3*x)%256, tga);
-
-      }
+    draw_rect(128, 252, 256, 0, 0, tga);
 
     fclose(tga);
 
-    return 0;
+  return 0;
 }
