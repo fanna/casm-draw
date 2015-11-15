@@ -37,7 +37,7 @@ void create_header(HEADER h, FILE *tga)
     fputc(h.desc, tga);
 }
 
-void draw(int x, int r, int g, int b, FILE *tga)
+void draw(int x, FILE *tga)
 {
     for(x; x < 640; x++)
       for(int y = 0; y < 480; y++)
@@ -45,64 +45,64 @@ void draw(int x, int r, int g, int b, FILE *tga)
         if(x < 80)
         {
           //white
-          fputc((b - 1)%256, tga); //B
-          fputc((g - 1)%256, tga); //G
-          fputc((r - 1)%256, tga); //R
+          fputc(255, tga); //B
+          fputc(255, tga); //G
+          fputc(255, tga); //R
         }
         else if(x > 80 && x <160)
         {
           //yellow
-          fputc(b%256, tga); //B
-          fputc((g - 1)%256, tga); //G
-          fputc((r - 1)%256, tga); //R
+          fputc(0, tga); //B
+          fputc(255, tga); //G
+          fputc(255, tga); //R
         }
         else if( x > 160 && x < 240)
         {
           //cyan
-          fputc((b - 1)%256, tga); //B
-          fputc((g - 1)%256, tga); //G
-          fputc(r%256, tga); //R
+          fputc(255, tga); //B
+          fputc(255, tga); //G
+          fputc(0, tga); //R
         }
         else if(x > 240 && x < 320)
         {
           //green
-          fputc(b%256, tga); //B
-          fputc((g - 1)%256, tga); //G
-          fputc(r%256, tga); //R
+          fputc(0, tga); //B
+          fputc(255, tga); //G
+          fputc(0, tga); //R
         }
         else if(x > 320 && x < 400)
         {
           //magenta
-          fputc((b - 1)%256, tga); //B
-          fputc(g%256, tga); //G
-          fputc((r - 1)%256, tga); //R
+          fputc(255, tga); //B
+          fputc(0, tga); //G
+          fputc(255, tga); //R
         }
         else if(x > 400 && x < 480)
         {
           //red
-          fputc(b%256, tga); //B
-          fputc(g%256, tga); //G
-          fputc((r - 1)%256, tga); //R
+          fputc(0, tga); //B
+          fputc(0, tga); //G
+          fputc(255, tga); //R
         }
         else if(x > 480 && x < 560)
         {
           //blue
-          fputc((b - 1)%256, tga); //B
-          fputc(g%256, tga); //G
-          fputc(r%256, tga); //R
+          fputc(255, tga); //B
+          fputc(0, tga); //G
+          fputc(0, tga); //R
         }
         else
         {
           //black
-          fputc((b - 255)%256, tga); //B
-          fputc((g - 255)%256, tga); //G
-          fputc((r - 255)%256, tga); //R
+          fputc(1, tga); //B
+          fputc(1, tga); //G
+          fputc(1, tga); //R
         }
 
       }
 }
 
-void animate(int r, int g, int b, FILE *tga)
+void animate(FILE *tga)
 {
   int k = 0;
 
@@ -131,7 +131,7 @@ void animate(int r, int g, int b, FILE *tga)
     tga = fopen(filename, "wb");
 
     create_header(header, tga);
-    draw(k, 256, 256, 256, tga);
+    draw(k, tga);
 
     fclose(tga);
   }
@@ -158,8 +158,8 @@ int main ()
     tga = fopen("picture.tga", "w+");
 
     create_header(header, tga);
-    draw(header.x, 256, 256, 256, tga);
-    animate(256, 256, 256, tga);
+    draw(header.x, tga);
+    animate(tga);
 
     fclose(tga);
 
