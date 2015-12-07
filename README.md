@@ -11,5 +11,5 @@ make
 ###Run
 
 ```
-./main
+./a.out
 ```

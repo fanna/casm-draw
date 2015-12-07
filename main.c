@@ -37,66 +37,52 @@ void create_header(HEADER h, FILE *tga)
     fputc(h.desc, tga);
 }
 
+void white(FILE *tga);
+void yellow(FILE *tga);
+void cyan(FILE *tga);
+void green(FILE *tga);
+void magenta(FILE *tga);
+void red(FILE *tga);
+void blue(FILE *tga);
+void black(FILE *tga);
+
 void draw(int x, FILE *tga)
 {
-    for(x; x < 640; x++)
-      for(int y = 0; y < 480; y++)
+    int y;
+    for(; x < 640; x++)
+      for(y = 0; y < 480; y++)
       {
         if(x < 80)
         {
-          //white
-          fputc(255, tga); //B
-          fputc(255, tga); //G
-          fputc(255, tga); //R
+          white(tga);
         }
         else if(x > 80 && x <160)
         {
-          //yellow
-          fputc(0, tga); //B
-          fputc(255, tga); //G
-          fputc(255, tga); //R
+          yellow(tga);
         }
         else if( x > 160 && x < 240)
         {
-          //cyan
-          fputc(255, tga); //B
-          fputc(255, tga); //G
-          fputc(0, tga); //R
+          cyan(tga);
         }
         else if(x > 240 && x < 320)
         {
-          //green
-          fputc(0, tga); //B
-          fputc(255, tga); //G
-          fputc(0, tga); //R
+          green(tga);
         }
         else if(x > 320 && x < 400)
         {
-          //magenta
-          fputc(255, tga); //B
-          fputc(0, tga); //G
-          fputc(255, tga); //R
+          magenta(tga);
         }
         else if(x > 400 && x < 480)
         {
-          //red
-          fputc(0, tga); //B
-          fputc(0, tga); //G
-          fputc(255, tga); //R
+          red(tga);
         }
         else if(x > 480 && x < 560)
         {
-          //blue
-          fputc(255, tga); //B
-          fputc(0, tga); //G
-          fputc(0, tga); //R
+          blue(tga);
         }
         else
         {
-          //black
-          fputc(1, tga); //B
-          fputc(1, tga); //G
-          fputc(1, tga); //R
+          black(tga);
         }
 
       }
@@ -105,8 +91,9 @@ void draw(int x, FILE *tga)
 void animate(FILE *tga)
 {
   int k = 0;
+  int z;
 
-  for(int z=0; z < 24; z++)
+  for(z = 0; z < 24; z++)
   {
     k += 25;
 
