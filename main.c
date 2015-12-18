@@ -37,52 +37,58 @@ void create_header(HEADER h, FILE *tga)
     fputc(h.desc, tga);
 }
 
-void white(FILE *tga);
-void yellow(FILE *tga);
-void cyan(FILE *tga);
-void green(FILE *tga);
-void magenta(FILE *tga);
-void red(FILE *tga);
-void blue(FILE *tga);
-void black(FILE *tga);
+void color(int r, int g, int b, FILE *tga);
 
 void draw(int x, FILE *tga)
 {
     int y;
-    for(; x < 640; x++)
-      for(y = 0; y < 480; y++)
+    int i = x;
+    for(i = 0; i < x; i++)
+      for(y = 0; y < 640; y++)
       {
-        if(x < 80)
+        if(y % 2 == 0)
         {
-          white(tga);
-        }
-        else if(x > 80 && x <160)
-        {
-          yellow(tga);
-        }
-        else if( x > 160 && x < 240)
-        {
-          cyan(tga);
-        }
-        else if(x > 240 && x < 320)
-        {
-          green(tga);
-        }
-        else if(x > 320 && x < 400)
-        {
-          magenta(tga);
-        }
-        else if(x > 400 && x < 480)
-        {
-          red(tga);
-        }
-        else if(x > 480 && x < 560)
-        {
-          blue(tga);
+          color(1, 1, 1, tga);
         }
         else
         {
-          black(tga);
+          color(255, 255, 255, tga);
+        }
+      }
+    for(; x < 480; x++)
+      for(y = 0; y < 640; y++)
+      {
+        if(y< 80)
+        {
+          color(255, 255, 255, tga);
+        }
+        else if(y>= 80 && y<160)
+        {
+          color(0, 255, 255, tga);
+        }
+        else if( y>= 160 && y< 240)
+        {
+          color(255, 255, 0, tga);
+        }
+        else if(y>= 240 && y< 320)
+        {
+          color(0, 255, 0, tga);
+        }
+        else if(y>= 320 && y< 400)
+        {
+          color(255, 0, 255, tga);
+        }
+        else if(y>= 400 && y< 480)
+        {
+          color(0, 0, 255, tga);
+        }
+        else if(y>= 480 && y< 560)
+        {
+          color(255, 0, 0, tga);
+        }
+        else
+        {
+          color(1, 1, 1, tga);
         }
 
       }
@@ -90,12 +96,12 @@ void draw(int x, FILE *tga)
 
 void animate(FILE *tga)
 {
-  int k = 0;
-  int z;
+  int shift = 0;
+  int frame_index;
 
-  for(z = 0; z < 24; z++)
+  for(frame_index = 0; frame_index < 24; frame_index++)
   {
-    k += 25;
+    shift += 20;
 
     HEADER header;
 
@@ -113,12 +119,12 @@ void animate(FILE *tga)
     header.desc= 0x20;
 
     char filename[64];
-    sprintf (filename, "anim%d.tga", z);
+    sprintf (filename, "anim%d.tga", frame_index);
 
     tga = fopen(filename, "wb");
 
     create_header(header, tga);
-    draw(k, tga);
+    draw(shift, tga);
 
     fclose(tga);
   }
