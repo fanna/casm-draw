@@ -50,6 +50,10 @@ void draw(int x, FILE *tga)
         {
           color(1, 1, 1, tga);
         }
+        else if(i % 2 == 0)
+        {
+          color(1, 1, 1, tga);
+        }
         else
         {
           color(255, 255, 255, tga);
